@@ -30,7 +30,7 @@
   .recommend_item{
     flex: 1;
     text-align: center;
-    margin: 10px;
+    margin: 8px;
   }
   .recommend_item img {
     width: 100%;
