@@ -1,10 +1,10 @@
 <template>
-  <div class="goods-list-item">
-    <a :href="goodsitem.link">
-      <img :src="goodsitem.show.img" alt="">
+  <div class="goods-list-item" @click="itemClick">
+    <div>
+      <img v-lazy="changeImg" alt="" @load="itemImgLoad" />
       <p class="title">{{goodsitem.title}}</p>
       <p class="info"><span class="price">{{goodsitem.price}}</span><span class="cfav">{{goodsitem.cfav}}</span></p>
-    </a>
+    </div>
   </div>
 </template>
 
@@ -18,6 +18,25 @@
           return {}
         }
       }
+    },
+    methods: {
+      itemImgLoad(){
+        this.$bus.$emit("itemimgload");
+      },
+      itemClick(){
+        this.$router.push("/detail/"+this.goodsitem.iid);
+      }
+    },
+    computed: {
+      changeImg(){
+        if(this.goodsitem.show){
+          return this.goodsitem.show.img;
+        }else if(this.goodsitem.image) {
+          return this.goodsitem.image;
+        }else if(this.goodsitem.img) {
+          return this.goodsitem.img;
+        }
+      }
     }
   }
 </script>
@@ -27,30 +46,30 @@
     margin-bottom: 10px;
     width: 48%;
   }
-  .goods-list-item a {
+  .goods-list-item div {
     display: block;
     font-size: 14px;
   }
-  .goods-list-item a img {
+  .goods-list-item div img {
     width: 100%;
     border-radius: 3px;
   }
-  .goods-list-item a .title {
+  .goods-list-item div .title {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: center;
   }
-  .goods-list-item a .info{
+  .goods-list-item div .info{
     text-align: center;
   }
-  .goods-list-item a .info span {
+  .goods-list-item div .info span {
     margin: 0 5px 0 5px;
   }
-  .goods-list-item a .info .price {
+  .goods-list-item div .info .price {
     color: red;
   }
-  .goods-list-item a .info .cfav::before{
+  .goods-list-item div .info .cfav::before{
     content: "";
     display: inline-block;
     background: url("../../../assets/imgs/common/collect.svg") 0 0;

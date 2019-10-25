@@ -25,7 +25,7 @@
     methods: {
       tabClick(i, goodstype){
         this.index = i;
-        this.$emit("changetype", goodstype);
+        this.$emit("changetype", goodstype,i);
       }
     }
   }
